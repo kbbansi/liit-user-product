@@ -1,5 +1,6 @@
 package com.leanicontechnology.SpringBootAssessment.api.controller;
 
+import com.leanicontechnology.SpringBootAssessment.api.dto.SubscriptionDto;
 import com.leanicontechnology.SpringBootAssessment.api.dto.UserDto;
 import com.leanicontechnology.SpringBootAssessment.api.service.services.UserService;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api/v1/users")
@@ -41,5 +43,11 @@ public class UserController {
     @DeleteMapping(path = "/{userUUID}")
     public ResponseEntity<UserDto> deleteUser(@PathVariable String userUUID) {
         return new ResponseEntity<>(userService.deleteUser(userUUID), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/{userUUID}/subscribe")
+    public ResponseEntity<UserDto> subscribeToProduct(@PathVariable String userUUID,
+                                                      @RequestBody Set<SubscriptionDto> subscriptions) {
+        return new ResponseEntity<>(userService.createSubscription(userUUID, subscriptions), HttpStatus.ACCEPTED);
     }
 }

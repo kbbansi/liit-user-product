@@ -18,4 +18,5 @@ public class ProductDto implements Serializable {
     private LocalDateTime modifiedOn;
     private String createdBy;
     private String modifiedBy;
+    private SubscriptionDto subscription;
 }

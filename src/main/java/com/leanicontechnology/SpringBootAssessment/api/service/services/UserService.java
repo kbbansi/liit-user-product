@@ -1,8 +1,10 @@
 package com.leanicontechnology.SpringBootAssessment.api.service.services;
 
+import com.leanicontechnology.SpringBootAssessment.api.dto.SubscriptionDto;
 import com.leanicontechnology.SpringBootAssessment.api.dto.UserDto;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     UserDto createNewUser(UserDto user);
@@ -15,5 +17,5 @@ public interface UserService {
 
     UserDto deleteUser(String userUUID);
 
-    //getUserSubscriptions
+    UserDto createSubscription(String userUUID, Set<SubscriptionDto> subscriptions);
 }

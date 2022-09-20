@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 public class UserDto implements Serializable {
@@ -22,4 +23,5 @@ public class UserDto implements Serializable {
     private LocalDateTime modifiedOn;
     private String createdBy;
     private String modifiedBy;
+    private Set<SubscriptionDto> subscriptions;
 }

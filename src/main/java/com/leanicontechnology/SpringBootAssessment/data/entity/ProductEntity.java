@@ -46,4 +46,8 @@ public class ProductEntity implements Serializable {
     private String createdBy;
 
     private String modifiedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "subscription_id")
+    private SubscriptionEntity subscription;
 }

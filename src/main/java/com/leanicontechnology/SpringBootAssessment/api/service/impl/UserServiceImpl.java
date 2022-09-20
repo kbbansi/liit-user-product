@@ -1,8 +1,10 @@
 package com.leanicontechnology.SpringBootAssessment.api.service.impl;
 
+import com.leanicontechnology.SpringBootAssessment.api.dto.SubscriptionDto;
 import com.leanicontechnology.SpringBootAssessment.api.dto.UserDto;
 import com.leanicontechnology.SpringBootAssessment.api.service.services.UserService;
 import com.leanicontechnology.SpringBootAssessment.data.entity.UserEntity;
+import com.leanicontechnology.SpringBootAssessment.data.repository.SubscriptionRepository;
 import com.leanicontechnology.SpringBootAssessment.data.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SubscriptionRepository subscriptionRepository;
 
 
     /**
@@ -94,6 +100,22 @@ public class UserServiceImpl implements UserService {
         var userEntity = userRepository.findByUserUUID(userUUID)
                 .orElseThrow(() -> new RuntimeException("No such user with ID: " + userUUID + " found"));
         userEntity.setIsActive(false);
+        return mapper.map(userRepository.save(userEntity), UserDto.class);
+    }
+
+    /**
+     * @param userUUID user uuid
+     * @param subscriptions set of subscriptions
+     * @return user
+     */
+    @Override
+    public UserDto createSubscription(String userUUID, Set<SubscriptionDto> subscriptions) {
+        var userEntity = userRepository.findByUserUUID(userUUID).orElseThrow(() -> new RuntimeException("No such user with ID: " + userUUID + " found"));
+
+        var subscriptionEntity = subscriptions.stream()
+                .map(subscription -> subscriptionRepository.findBySubscriptionUUID(subscription.getSubscriptionUUID()).orElseThrow(RuntimeException::new))
+                .collect(Collectors.toSet());
+        userEntity.setSubscriptions(subscriptionEntity);
         return mapper.map(userRepository.save(userEntity), UserDto.class);
     }
 }

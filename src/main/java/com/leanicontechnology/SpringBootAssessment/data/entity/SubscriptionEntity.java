@@ -1,10 +1,6 @@
 package com.leanicontechnology.SpringBootAssessment.data.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,12 +10,11 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@Entity(name = "users")
+@Entity(name = "subscriptions")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements Serializable {
+public class SubscriptionEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,39 +22,37 @@ public class UserEntity implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private String userUUID;
+    private String subscriptionUUID;
 
     @Column(nullable = false)
-    private String userName;
+    private String subscriptionName;
+
+    private String description;
 
     @Column(nullable = false)
-    private String dateOfBirth;
+    private String startDate;
 
     @Column(nullable = false)
-    private String email;
+    private String endDate;
 
     @Column(nullable = false)
-    private String firstName;
+    private Double validityPeriod;
 
-    @Column(nullable = false)
-    private String lastName;
-
-    private String otherNames;
+    private Double price;
 
     @Column(nullable = false)
     private Boolean isActive;
 
-    private String imageUrl;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    @Column(nullable = false)
+    @ManyToMany
+    @JoinColumn(name = "product_id")
+    private Set<ProductEntity> products;
+
     private LocalDateTime createdOn;
-
     private LocalDateTime modifiedOn;
-
     private String createdBy;
-
     private String modifiedBy;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<SubscriptionEntity> subscriptions;
 }

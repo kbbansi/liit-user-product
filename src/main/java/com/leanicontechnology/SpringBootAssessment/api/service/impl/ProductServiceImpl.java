@@ -4,7 +4,6 @@ import com.leanicontechnology.SpringBootAssessment.api.dto.ProductDto;
 import com.leanicontechnology.SpringBootAssessment.api.service.services.ProductService;
 import com.leanicontechnology.SpringBootAssessment.data.entity.ProductEntity;
 import com.leanicontechnology.SpringBootAssessment.data.repository.ProductRepository;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
